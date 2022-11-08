@@ -1,8 +1,4 @@
-mod interpreter;
-mod program;
-
-use interpreter::{InstructionCycle, Interpreter};
-use program::Program;
+use interpreter::{InstructionCycle, Interpreter, Program};
 
 extern "C" {
     pub fn init(

@@ -2,11 +2,19 @@
 name = "vt-ws2223-hw"
 version = "0.1.0"
 edition = "2021"
+authors = ["Alessandro Grassi <alessandrograssi17@gmail.com>"]
+license = "MIT OR Apache-2.0"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[workspace]
+members = ["interpreter"]
 
 [dependencies]
-
+interpreter = { path = "interpreter" }
+criterion = "0.4"
 
 [build-dependencies]
 cc = { version = "1.0", features = ["parallel"] }
+
+[[bench]]
+name = "scenarios"
+harness = false

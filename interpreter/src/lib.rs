@@ -1,11 +1,12 @@
-use crate::program::Program;
-pub use instruction_cycle::InstructionCycle;
-use isa::{Instruction, Isa};
-use state::MachineState;
-
 mod instruction_cycle;
 mod isa;
+pub mod program;
 mod state;
+
+pub use instruction_cycle::InstructionCycle;
+use isa::{Instruction, Isa};
+pub use program::Program;
+use state::MachineState;
 
 pub struct Interpreter {
     program: Program,
