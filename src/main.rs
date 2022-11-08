@@ -1,4 +1,5 @@
 use interpreter::{InstructionCycle, Interpreter, Program};
+use std::time::Instant;
 
 extern "C" {
     pub fn init(
@@ -24,7 +25,7 @@ fn main() {
     ];
 
     for (i, item) in scenario.iter_mut().enumerate() {
-        println!("Scenario {}", i + 1);
+        println!("Running scenario {}...", i + 1);
         unsafe {
             init(
                 buf.as_mut_ptr() as *mut i8,
@@ -39,8 +40,41 @@ fn main() {
         let program = Program::new(buf, item.0);
         let mut interpreter = Interpreter::new(program, register_a, register_l);
 
+        let mut clocks: usize = 0;
+        let now = Instant::now();
         while !interpreter.halted() {
             interpreter.step();
+            clocks += 1;
         }
+
+        let duration = now.elapsed();
+        let ns = duration.as_nanos() as f64;
+
+        println!(
+            "Completed scenario {}:\n\
+        \tTime required: {}\n\
+        \tTotal Clock cycles: {}\n\
+        \tClock cycles per sec: {}\n\
+        \tAvg time per clock cycle: {}",
+            i + 1,
+            format_time(ns),
+            clocks,
+            (1e9f64 / ns) * clocks as f64,
+            format_time(ns / clocks as f64)
+        );
+    }
+}
+
+fn format_time(ns: f64) -> String {
+    if ns < 1.0 {
+        format!("{:>6} ps", ns * 1e3)
+    } else if ns < 10f64.powi(3) {
+        format!("{:>6} ns", ns)
+    } else if ns < 10f64.powi(6) {
+        format!("{:>6} us", ns / 1e3)
+    } else if ns < 10f64.powi(9) {
+        format!("{:>6} ms", ns / 1e6)
+    } else {
+        format!("{:>6} s", ns / 1e9)
     }
 }
