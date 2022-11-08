@@ -52,10 +52,10 @@ fn main() {
 
         println!(
             "Completed scenario {}:\n\
-        \tTime required: {}\n\
-        \tTotal Clock cycles: {}\n\
-        \tClock cycles per sec: {}\n\
-        \tAvg time per clock cycle: {}",
+            \tTime required: {}\n\
+            \tTotal Clock cycles: {}\n\
+            \tClock cycles per sec: {}\n\
+            \tAvg time per clock cycle: {}",
             i + 1,
             format_time(ns),
             clocks,
