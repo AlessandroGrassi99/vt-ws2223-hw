@@ -24,7 +24,8 @@
            991.483      instructions:u                   #    1,10  insn per cycle         
                                                   #    0,05  stalled cycles per insn
            247.367      branches:u                       #  286,348 M/sec                  
-             4.972      branch-misses:u                  #    2,01% of all branches    ```
+             4.972      branch-misses:u                  #    2,01% of all branches    
+    ```
   - #### Scenario 2 
     ```
               1,19 msec task-clock:u                     #    0,682 CPUs utilized          
@@ -37,4 +38,5 @@
            983.865      instructions:u                   #    0,78  insn per cycle         
                                                   #    0,04  stalled cycles per insn
            247.941      branches:u                       #  208,455 M/sec                  
-            18.916      branch-misses:u                  #    7,63% of all branches   ```
+            18.916      branch-misses:u                  #    7,63% of all branches   
+    ```
