@@ -12,6 +12,9 @@ extern "C" {
     );
 }
 
+const WARM_UP_CYCLE: usize = 100;
+const BATCH_SIZE: usize = 1000;
+
 fn main() {
     let mut buf: [u8; 50000] = [0; 50000];
     let mut register_a: i32 = 0;
@@ -39,26 +42,35 @@ fn main() {
 
         let program = Program::new(buf, item.0);
         let mut interpreter = Interpreter::new(program, register_a, register_l);
+        for _ in 0..BATCH_SIZE {
+            while !interpreter.halted() {
+                interpreter.step();
+            }
+        }
 
         let mut clocks: usize = 0;
         let now = Instant::now();
-        while !interpreter.halted() {
-            interpreter.step();
-            clocks += 1;
+        for _ in 0..BATCH_SIZE {
+            interpreter.reset(register_a, register_l);
+            while !interpreter.halted() {
+                interpreter.step();
+                clocks += 1;
+            }
         }
 
         let duration = now.elapsed();
         let ns = duration.as_nanos() as f64;
 
         println!(
-            "Completed scenario {}:\n\
+            "Completed scenario {} with a batch size of {}:\n\
             \tTime required: {}\n\
             \tTotal Clock cycles: {}\n\
             \tClock cycles per sec: {}\n\
             \tAvg time per clock cycle: {}",
             i + 1,
-            format_time(ns),
-            clocks,
+            BATCH_SIZE,
+            format_time(ns / BATCH_SIZE as f64),
+            clocks / BATCH_SIZE,
             (1e9f64 / ns) * clocks as f64,
             format_time(ns / clocks as f64)
         );

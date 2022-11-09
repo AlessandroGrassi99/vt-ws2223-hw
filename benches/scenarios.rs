@@ -40,6 +40,7 @@ fn scenario_1(c: &mut Criterion) {
 
     c.bench_function("scenario 1", |b| {
         b.iter(|| {
+            interpreter.reset(register_a, register_l);
             while !interpreter.halted() {
                 interpreter.step();
             }
@@ -55,6 +56,7 @@ fn scenario_2(c: &mut Criterion) {
 
     c.bench_function("scenario 2", |b| {
         b.iter(|| {
+            interpreter.reset(register_a, register_l);
             while !interpreter.halted() {
                 interpreter.step();
             }
@@ -70,6 +72,7 @@ fn scenario_3(c: &mut Criterion) {
 
     c.bench_function("scenario 3", |b| {
         b.iter(|| {
+            interpreter.reset(register_a, register_l);
             while !interpreter.halted() {
                 interpreter.step();
             }
@@ -85,6 +88,7 @@ fn scenario_4(c: &mut Criterion) {
 
     c.bench_function("scenario 4", |b| {
         b.iter(|| {
+            interpreter.reset(register_a, register_l);
             while !interpreter.halted() {
                 interpreter.step();
             }
