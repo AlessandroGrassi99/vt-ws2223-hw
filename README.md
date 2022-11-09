@@ -11,4 +11,30 @@
   - Relate the total clock cycles, to the total time required for a complete execution.
 - [x] How to get stable measurement results?
   - It would be necessary to do a CPU warm-up, run the scenario multiple times, and extract the mean and standard deviation from the set of results.
-- [ ] The difference in execution time between input scenarios 1 and 2 partly relates to branch prediction behavior. Using `perf state <interpreter>`, you can find out the number of branch mispredictions. How large is the cycle penalty of one misprediction for the CPU in your laptop on average?
+- [x] The difference in execution time between input scenarios 1 and 2 partly relates to branch prediction behavior. Using `perf state <interpreter>`, you can find out the number of branch mispredictions. How large is the cycle penalty of one misprediction for the CPU in your laptop on average?
+  - #### Scenario 1
+    ```       
+              0,86 msec task-clock:u                     #    0,657 CPUs utilized          
+                 0      context-switches:u               #    0,000 /sec                   
+                 0      cpu-migrations:u                 #    0,000 /sec                   
+               166      page-faults:u                    #  192,159 K/sec                  
+           905.052      cycles:u                         #    1,048 GHz                    
+             1.792      stalled-cycles-frontend:u        #    0,20% frontend cycles idle   
+            50.652      stalled-cycles-backend:u         #    5,60% backend cycles idle    
+           991.483      instructions:u                   #    1,10  insn per cycle         
+                                                  #    0,05  stalled cycles per insn
+           247.367      branches:u                       #  286,348 M/sec                  
+             4.972      branch-misses:u                  #    2,01% of all branches    ```
+  - #### Scenario 2 
+    ```
+              1,19 msec task-clock:u                     #    0,682 CPUs utilized          
+                 0      context-switches:u               #    0,000 /sec                   
+                 0      cpu-migrations:u                 #    0,000 /sec                   
+               167      page-faults:u                    #  140,404 K/sec                  
+         1.262.512      cycles:u                         #    1,061 GHz                    
+             2.312      stalled-cycles-frontend:u        #    0,18% frontend cycles idle   
+            38.571      stalled-cycles-backend:u         #    3,06% backend cycles idle    
+           983.865      instructions:u                   #    0,78  insn per cycle         
+                                                  #    0,04  stalled cycles per insn
+           247.941      branches:u                       #  208,455 M/sec                  
+            18.916      branch-misses:u                  #    7,63% of all branches   ```
